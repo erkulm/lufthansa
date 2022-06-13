@@ -3,6 +3,8 @@ package com.erkul.reactive.demo.service.impl;
 import com.erkul.reactive.demo.entity.City;
 import com.erkul.reactive.demo.model.CityDTO;
 import com.erkul.reactive.demo.repository.CityRepository;
+import com.erkul.reactive.demo.repository.elastic.CityElasticRepository;
+import com.erkul.reactive.demo.repository.elastic.model.CityESO;
 import com.erkul.reactive.demo.service.CityService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -17,6 +19,7 @@ import reactor.core.publisher.Mono;
 public class CityServiceImpl implements CityService {
     private final CityRepository cityRepository;
     private final ModelMapper modelMapper;
+    private final CityElasticRepository cityElasticRepository;
 
     @Override
     public Flux<CityDTO> getCities() {
@@ -30,7 +33,10 @@ public class CityServiceImpl implements CityService {
 
     @Override
     public Flux<City> save(Flux<City> cityFlux) {
-        return cityRepository.insert(cityFlux);
+        return cityRepository.insert(cityFlux)
+                .doOnNext(city -> cityElasticRepository.save(
+                        CityESO.builder().id(city.getId())
+                                .cityCode(city.getCityCode()).build()));
     }
 
     @Override

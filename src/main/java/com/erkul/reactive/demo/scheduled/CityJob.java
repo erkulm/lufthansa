@@ -49,7 +49,7 @@ public class CityJob {
                         throwable -> log.error(throwable.toString()),
                         () -> log.info("subscription complete")
                 ).dispose();
-//        final Flux<City> save = cityService.save(cityDTOFlux);
-//        save.blockFirst();
+        final Flux<City> save = cityService.save(cityDTOFlux);
+        save.blockFirst();
     }
 }
