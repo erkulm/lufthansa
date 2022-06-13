@@ -1,8 +1,6 @@
 package com.erkul.reactive.demo.external.service;
 
 import com.erkul.reactive.demo.external.model.CitiesResponse;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -16,7 +14,6 @@ import reactor.netty.http.client.HttpClient;
 @RequiredArgsConstructor
 public class CityExtService {
     private final HttpClient httpClient;
-    private final ObjectMapper objectMapper;
 
     public Mono<CitiesResponse> getAllCities() {
         WebClient client = WebClient.builder()
@@ -24,7 +21,9 @@ public class CityExtService {
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .clientConnector(new ReactorClientHttpConnector(httpClient))
                 .build();
-        return client.get().uri("/cities").retrieve().bodyToMono(CitiesResponse.class);
+        return client.get().uri("/cities")
+                .headers(h->h.setBearerAuth("49sfgpwctf5g2zww52u5b54m"))
+                .retrieve().bodyToMono(CitiesResponse.class);
     }
 
 
@@ -36,6 +35,7 @@ public class CityExtService {
                 .build();
 
         return client.get().uri("/cities")
+                .headers(h->h.setBearerAuth("49sfgpwctf5g2zww52u5b54m"))
                 .retrieve()
                 .bodyToMono(String.class).single();
     }
