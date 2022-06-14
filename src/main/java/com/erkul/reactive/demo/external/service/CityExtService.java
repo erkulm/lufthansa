@@ -22,7 +22,7 @@ public class CityExtService {
                 .clientConnector(new ReactorClientHttpConnector(httpClient))
                 .build();
         return client.get().uri("/cities")
-                .headers(h->h.setBearerAuth("49sfgpwctf5g2zww52u5b54m"))
+                .headers(h->h.setBearerAuth("3hauc6n8rygyn8j267k3frce"))
                 .retrieve().bodyToMono(CitiesResponse.class);
     }
 
@@ -35,7 +35,7 @@ public class CityExtService {
                 .build();
 
         return client.get().uri("/cities")
-                .headers(h->h.setBearerAuth("49sfgpwctf5g2zww52u5b54m"))
+                .headers(h->h.setBearerAuth("3hauc6n8rygyn8j267k3frce"))
                 .retrieve()
                 .bodyToMono(String.class).single();
     }

@@ -27,7 +27,6 @@ public class CityJob {
 
     private final CityExtService cityExtService;
     private final CityService cityService;
-    private final ModelMapper modelMapper;
 
     @Scheduled(fixedRate = 600000)
     public void getCitiesFromLufthansaAndSaveToDatabase() {
@@ -42,14 +41,6 @@ public class CityJob {
                                         .utcOffset(city.getUtcOffset())
                                         .build()
                         );
-        //TODO subscribe doesn't work why?
-        cityDTOFlux
-                .subscribe(
-                        c -> cityService.saveEntity(modelMapper.map(c, CityDTO.class)).block(),
-                        throwable -> log.error(throwable.toString()),
-                        () -> log.info("subscription complete")
-                ).dispose();
-        final Flux<City> save = cityService.save(cityDTOFlux);
-        save.blockFirst();
+        cityService.save(cityDTOFlux);
     }
 }

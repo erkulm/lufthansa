@@ -11,7 +11,7 @@ public interface CityService {
     Flux<CityDTO> getCities();
     void saveCities(Flux<CityDTO> cityDTOMono);
 
-    Flux<City> save(Flux<City> cityFlux);
+    void save(Flux<City> cityFlux);
 
     Mono<City> saveEntity(CityDTO cityFlux);
 
