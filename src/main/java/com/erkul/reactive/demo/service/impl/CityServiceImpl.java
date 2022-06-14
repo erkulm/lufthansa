@@ -62,7 +62,7 @@ public class CityServiceImpl implements CityService {
             return cityElasticRepository.findAllByCountryCodeContains(search.countryCode())
                     .map(city -> modelMapper.map(city, CityDTO.class));
         if (!StringUtils.hasText(search.countryCode()))
-            return cityElasticRepository.findAllByCityCodeContains(search.countryCode())
+            return cityElasticRepository.findAllByCityCodeContains(search.cityCode())
                     .map(city -> modelMapper.map(city, CityDTO.class));
         return cityElasticRepository.findAllByCityCodeContainsAndCountryCodeContains(search.cityCode(), search.countryCode())
                 .map(city -> modelMapper.map(city, CityDTO.class));
