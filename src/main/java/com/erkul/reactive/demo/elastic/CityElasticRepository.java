@@ -8,4 +8,8 @@ import reactor.core.publisher.Flux;
 @Repository
 public interface CityElasticRepository extends ReactiveCrudRepository<CityESO, String> {
     Flux<CityESO> findAllByCityCodeContains(String cityCode);
+
+    Flux<CityESO> findAllByCountryCodeContains(String cityCode);
+
+    Flux<CityESO> findAllByCityCodeContainsAndCountryCodeContains(String cityCode, String countryCode);
 }

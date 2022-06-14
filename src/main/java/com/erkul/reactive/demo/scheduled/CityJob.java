@@ -28,7 +28,7 @@ public class CityJob {
     private final CityExtService cityExtService;
     private final CityService cityService;
 
-    @Scheduled(fixedRate = 600000)
+    //@Scheduled(fixedRate = 600000)
     public void getCitiesFromLufthansaAndSaveToDatabase() {
         final Mono<CitiesResponse> allCities = cityExtService.getAllCities();
 

@@ -2,6 +2,7 @@ package com.erkul.reactive.demo.service;
 
 import com.erkul.reactive.demo.entity.City;
 import com.erkul.reactive.demo.model.CityDTO;
+import com.erkul.reactive.demo.service.model.CitySearch;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -16,4 +17,6 @@ public interface CityService {
     Mono<City> saveEntity(CityDTO cityFlux);
 
     Flux<CityDTO> searchCities(String search);
+
+    Flux<CityDTO> searchCities(CitySearch search);
 }
