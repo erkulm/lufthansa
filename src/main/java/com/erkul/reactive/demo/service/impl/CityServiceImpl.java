@@ -1,10 +1,10 @@
 package com.erkul.reactive.demo.service.impl;
 
+import com.erkul.reactive.demo.elastic.CityElasticRepository;
+import com.erkul.reactive.demo.elastic.model.CityESO;
 import com.erkul.reactive.demo.entity.City;
 import com.erkul.reactive.demo.model.CityDTO;
 import com.erkul.reactive.demo.repository.CityRepository;
-import com.erkul.reactive.demo.elastic.CityElasticRepository;
-import com.erkul.reactive.demo.elastic.model.CityESO;
 import com.erkul.reactive.demo.service.CityService;
 import com.erkul.reactive.demo.service.model.CitySearch;
 import lombok.RequiredArgsConstructor;
@@ -13,10 +13,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-
-import java.time.Duration;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,10 +27,6 @@ public class CityServiceImpl implements CityService {
         return cityElasticRepository.findAll().map(city -> modelMapper.map(city, CityDTO.class));
     }
 
-    @Override
-    public void saveCities(Flux<CityDTO> cityDTOFlux) {
-        //TODO
-    }
 
     @Override
     public void save(Flux<City> cityFlux) {
@@ -42,12 +34,6 @@ public class CityServiceImpl implements CityService {
                 .doOnNext(city -> cityElasticRepository.save(modelMapper.map(city, CityESO.class)).subscribe())
                 .doOnError(throwable -> log.error(throwable.getMessage()))
                 .subscribe();
-    }
-
-    @Override
-    public Mono<City> saveEntity(CityDTO cityFlux) {
-        final City entity = modelMapper.map(cityFlux, City.class);
-        return cityRepository.insert(entity);
     }
 
     @Override
@@ -68,7 +54,4 @@ public class CityServiceImpl implements CityService {
                 .map(city -> modelMapper.map(city, CityDTO.class));
     }
 
-    public void saveOneCity(Mono<City> cityFlux) {
-        cityRepository.insert(cityFlux);
-    }
 }
