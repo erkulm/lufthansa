@@ -6,6 +6,7 @@ import com.erkul.reactive.demo.service.CityService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -19,7 +20,7 @@ public class CityJob {
     private final CityExtService cityExtService;
     private final CityService cityService;
 
-    //@Scheduled(fixedRate = 600000)
+    @Scheduled(fixedRate = 6000000)
     public void getCitiesFromLufthansaAndSaveToDatabase() {
         final Mono<CitiesResponse> allCities = cityExtService.getAllCities();
 
