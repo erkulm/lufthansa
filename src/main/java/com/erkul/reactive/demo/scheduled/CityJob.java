@@ -1,12 +1,15 @@
 package com.erkul.reactive.demo.scheduled;
 
+import com.erkul.reactive.demo.elastic.CityElasticRepository;
+import com.erkul.reactive.demo.elastic.model.CityESO;
 import com.erkul.reactive.demo.external.model.CitiesResponse;
 import com.erkul.reactive.demo.external.service.CityExtService;
+import com.erkul.reactive.demo.repository.CityRepository;
 import com.erkul.reactive.demo.service.CityService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -19,10 +22,15 @@ public class CityJob {
 
     private final CityExtService cityExtService;
     private final CityService cityService;
+    private final CityRepository cityRepository;
+    private final CityElasticRepository cityElasticRepository;
+    private final ModelMapper modelMapper;
 
-    @Scheduled(fixedRate = 6000000)
-    public void getCitiesFromLufthansaAndSaveToDatabase() {
-        final Mono<CitiesResponse> allCities = cityExtService.getAllCities();
+    private int offset = 0;
+
+    //@Scheduled(fixedRate = 6000000)
+    private void getCitiesAndSave() {
+        final Mono<CitiesResponse> allCities = cityExtService.getAllCities(100, offset);
 
         final Flux<com.erkul.reactive.demo.entity.City> cityDTOFlux =
                 allCities.flatMapIterable(ac -> ac.getCityResource().getCities().getCity())
@@ -33,6 +41,21 @@ public class CityJob {
                                         .utcOffset(city.getUtcOffset())
                                         .build()
                         );
-        cityService.save(cityDTOFlux);
+
+        cityRepository.insert(cityDTOFlux)
+                .doOnNext(city -> cityElasticRepository.save(modelMapper.map(city, CityESO.class)).subscribe())
+                .doOnError(throwable -> log.error(throwable.getMessage()))
+                .count()
+                .subscribe(c -> {
+                    if (c > 0) {
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        offset = offset + c.intValue();
+                        getCitiesAndSave();
+                    }
+                });
     }
 }

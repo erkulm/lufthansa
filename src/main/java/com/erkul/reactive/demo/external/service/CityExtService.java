@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class CityExtService {
@@ -16,6 +18,15 @@ public class CityExtService {
     public Mono<CitiesResponse> getAllCities() {
         return webClient
                 .get().uri(webClientConfig.getCitiesUrl())
+                .retrieve().bodyToMono(CitiesResponse.class);
+    }
+
+    public Mono<CitiesResponse> getAllCities(final Integer limit, final Integer offset) {
+        return webClient
+                .get().uri(uriBuilder -> uriBuilder.path(webClientConfig.getCitiesUrl())
+                        .queryParamIfPresent("limit", Optional.ofNullable(limit))
+                        .queryParamIfPresent("offset", Optional.ofNullable(offset))
+                        .build())
                 .retrieve().bodyToMono(CitiesResponse.class);
     }
 
