@@ -20,12 +20,12 @@ public class CityRestService {
     }
 
     @GetMapping("/get-by-code")
-    public ResponseEntity<Flux<CityDTO>> getCities(@RequestParam String code) {
+    public ResponseEntity<Flux<CityDTO>> getCitiesByCode(@RequestParam String code) {
         return ResponseEntity.ok(cityService.searchCities(code));
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Flux<CityDTO>> getCities(@RequestBody CitySearch search) {
+    public ResponseEntity<Flux<CityDTO>> searchCities(@RequestBody CitySearch search) {
         return ResponseEntity.ok(cityService.searchCities(search));
     }
 
