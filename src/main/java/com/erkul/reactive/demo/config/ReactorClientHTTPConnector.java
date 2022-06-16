@@ -13,7 +13,7 @@ public class ReactorClientHTTPConnector {
         return HttpClient
                 .create()
                 .wiretap("reactor.netty.http.client.HttpClient",
-                        LogLevel.DEBUG, AdvancedByteBufFormat.TEXTUAL);
+                        LogLevel.INFO, AdvancedByteBufFormat.TEXTUAL);
     }
 
 }
