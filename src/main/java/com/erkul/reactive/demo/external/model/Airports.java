@@ -15,50 +15,24 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "@Version",
-    "Link",
-    "TotalCount"
+    "Airport"
 })
 @Generated("jsonschema2pojo")
-public class Meta {
+public class Airports {
 
-    @JsonProperty("@Version")
-    private String version;
-    @JsonProperty("Link")
-    private List<Link> link = new ArrayList<Link>();
-    @JsonProperty("TotalCount")
-    private Integer totalCount;
+    @JsonProperty("Airport")
+    private List<Airport> airport = new ArrayList<Airport>();
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("@Version")
-    public String getVersion() {
-        return version;
+    @JsonProperty("Airport")
+    public List<Airport> getAirport() {
+        return airport;
     }
 
-    @JsonProperty("@Version")
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    @JsonProperty("Link")
-    public List<Link> getLink() {
-        return link;
-    }
-
-    @JsonProperty("Link")
-    public void setLink(List<Link> link) {
-        this.link = link;
-    }
-
-    @JsonProperty("TotalCount")
-    public Integer getTotalCount() {
-        return totalCount;
-    }
-
-    @JsonProperty("TotalCount")
-    public void setTotalCount(Integer totalCount) {
-        this.totalCount = totalCount;
+    @JsonProperty("Airport")
+    public void setAirport(List<Airport> airport) {
+        this.airport = airport;
     }
 
     @JsonAnyGetter

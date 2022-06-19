@@ -1,9 +1,7 @@
 
 package com.erkul.reactive.demo.external.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -15,50 +13,37 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "@Version",
-    "Link",
-    "TotalCount"
+    "Latitude",
+    "Longitude"
 })
 @Generated("jsonschema2pojo")
-public class Meta {
+public class Coordinate {
 
-    @JsonProperty("@Version")
-    private String version;
-    @JsonProperty("Link")
-    private List<Link> link = new ArrayList<Link>();
-    @JsonProperty("TotalCount")
-    private Integer totalCount;
+    @JsonProperty("Latitude")
+    private Double latitude;
+    @JsonProperty("Longitude")
+    private Double longitude;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("@Version")
-    public String getVersion() {
-        return version;
+    @JsonProperty("Latitude")
+    public Double getLatitude() {
+        return latitude;
     }
 
-    @JsonProperty("@Version")
-    public void setVersion(String version) {
-        this.version = version;
+    @JsonProperty("Latitude")
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
     }
 
-    @JsonProperty("Link")
-    public List<Link> getLink() {
-        return link;
+    @JsonProperty("Longitude")
+    public Double getLongitude() {
+        return longitude;
     }
 
-    @JsonProperty("Link")
-    public void setLink(List<Link> link) {
-        this.link = link;
-    }
-
-    @JsonProperty("TotalCount")
-    public Integer getTotalCount() {
-        return totalCount;
-    }
-
-    @JsonProperty("TotalCount")
-    public void setTotalCount(Integer totalCount) {
-        this.totalCount = totalCount;
+    @JsonProperty("Longitude")
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 
     @JsonAnyGetter
