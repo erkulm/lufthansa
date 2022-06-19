@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "AirportResource"
 })
 @Generated("jsonschema2pojo")
-public class AirportHolder {
+public class AirportsResponse {
 
     @JsonProperty("AirportResource")
     private AirportResource airportResource;

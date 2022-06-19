@@ -12,5 +12,6 @@ import org.springframework.context.annotation.Configuration;
 public class WebClientConfig {
     private String baseUrl;
     private String citiesUrl;
+    private String airportsUrl;
     private String bearerToken;
 }

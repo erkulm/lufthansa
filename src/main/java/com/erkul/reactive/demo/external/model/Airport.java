@@ -4,12 +4,8 @@ package com.erkul.reactive.demo.external.model;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Generated;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import com.fasterxml.jackson.annotation.*;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -23,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "TimeZoneId"
 })
 @Generated("jsonschema2pojo")
+@JsonIgnoreProperties({"Names"})
 public class Airport {
 
     @JsonProperty("AirportCode")
