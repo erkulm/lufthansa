@@ -31,7 +31,8 @@ public class CityServiceImpl implements CityService {
     @Override
     public void save(Flux<City> cityFlux) {
         cityRepository.insert(cityFlux)
-                .doOnNext(city -> cityElasticRepository.save(modelMapper.map(city, CityESO.class)).subscribe())
+                .map(city -> modelMapper.map(city, CityESO.class))
+                .flatMap(cityElasticRepository::save)
                 .doOnError(throwable -> log.error(throwable.getMessage()))
                 .subscribe();
     }
