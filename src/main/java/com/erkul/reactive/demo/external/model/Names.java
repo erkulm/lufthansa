@@ -1,7 +1,9 @@
 
 package com.erkul.reactive.demo.external.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -19,23 +21,18 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 public class Names {
 
     @JsonProperty("Name")
-    private Name[] name;
+    private List<Name> name = new ArrayList<Name>();
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonProperty("Name")
-    public Name[] getName() {
+    public List<Name> getName() {
         return name;
     }
 
     @JsonProperty("Name")
-    public void setName(Name[] name) {
+    public void setName(List<Name> name) {
         this.name = name;
-    }
-
-    public Names withName(Name[] name) {
-        this.name = name;
-        return this;
     }
 
     @JsonAnyGetter
@@ -46,11 +43,6 @@ public class Names {
     @JsonAnySetter
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
-    }
-
-    public Names withAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-        return this;
     }
 
 }

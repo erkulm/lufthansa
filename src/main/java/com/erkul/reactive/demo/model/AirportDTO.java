@@ -12,8 +12,9 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CityDTO {
+public class AirportDTO {
     String id;
+    String airportCode;
     String cityCode;
     String countryCode;
     Set<Names> cityNames;

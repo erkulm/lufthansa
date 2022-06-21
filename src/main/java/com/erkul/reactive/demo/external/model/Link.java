@@ -36,11 +36,6 @@ public class Link {
         this.href = href;
     }
 
-    public Link withHref(String href) {
-        this.href = href;
-        return this;
-    }
-
     @JsonProperty("@Rel")
     public String getRel() {
         return rel;
@@ -51,11 +46,6 @@ public class Link {
         this.rel = rel;
     }
 
-    public Link withRel(String rel) {
-        this.rel = rel;
-        return this;
-    }
-
     @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
         return this.additionalProperties;
@@ -64,11 +54,6 @@ public class Link {
     @JsonAnySetter
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
-    }
-
-    public Link withAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-        return this;
     }
 
 }

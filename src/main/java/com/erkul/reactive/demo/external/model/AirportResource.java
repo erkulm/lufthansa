@@ -1,9 +1,7 @@
 
 package com.erkul.reactive.demo.external.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -15,50 +13,37 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "@Version",
-    "Link",
-    "TotalCount"
+    "Airports",
+    "Meta"
 })
 @Generated("jsonschema2pojo")
-public class Meta {
+public class AirportResource {
 
-    @JsonProperty("@Version")
-    private String version;
-    @JsonProperty("Link")
-    private List<Link> link = new ArrayList<Link>();
-    @JsonProperty("TotalCount")
-    private Integer totalCount;
+    @JsonProperty("Airports")
+    private Airports airports;
+    @JsonProperty("Meta")
+    private Meta meta;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("@Version")
-    public String getVersion() {
-        return version;
+    @JsonProperty("Airports")
+    public Airports getAirports() {
+        return airports;
     }
 
-    @JsonProperty("@Version")
-    public void setVersion(String version) {
-        this.version = version;
+    @JsonProperty("Airports")
+    public void setAirports(Airports airports) {
+        this.airports = airports;
     }
 
-    @JsonProperty("Link")
-    public List<Link> getLink() {
-        return link;
+    @JsonProperty("Meta")
+    public Meta getMeta() {
+        return meta;
     }
 
-    @JsonProperty("Link")
-    public void setLink(List<Link> link) {
-        this.link = link;
-    }
-
-    @JsonProperty("TotalCount")
-    public Integer getTotalCount() {
-        return totalCount;
-    }
-
-    @JsonProperty("TotalCount")
-    public void setTotalCount(Integer totalCount) {
-        this.totalCount = totalCount;
+    @JsonProperty("Meta")
+    public void setMeta(Meta meta) {
+        this.meta = meta;
     }
 
     @JsonAnyGetter

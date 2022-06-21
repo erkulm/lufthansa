@@ -12,12 +12,13 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class City {
+public class Airport {
     @Id
     String id;
+    String airportCode;
     String cityCode;
     String countryCode;
-    Set<Names> cityNames;
+    Set<Names> airportNames;
     String utcOffset;
     String timeZoneId;
 }

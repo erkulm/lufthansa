@@ -1,9 +1,7 @@
 
 package com.erkul.reactive.demo.external.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -15,50 +13,24 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "@Version",
-    "Link",
-    "TotalCount"
+    "Coordinate"
 })
 @Generated("jsonschema2pojo")
-public class Meta {
+public class Position {
 
-    @JsonProperty("@Version")
-    private String version;
-    @JsonProperty("Link")
-    private List<Link> link = new ArrayList<Link>();
-    @JsonProperty("TotalCount")
-    private Integer totalCount;
+    @JsonProperty("Coordinate")
+    private Coordinate coordinate;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("@Version")
-    public String getVersion() {
-        return version;
+    @JsonProperty("Coordinate")
+    public Coordinate getCoordinate() {
+        return coordinate;
     }
 
-    @JsonProperty("@Version")
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    @JsonProperty("Link")
-    public List<Link> getLink() {
-        return link;
-    }
-
-    @JsonProperty("Link")
-    public void setLink(List<Link> link) {
-        this.link = link;
-    }
-
-    @JsonProperty("TotalCount")
-    public Integer getTotalCount() {
-        return totalCount;
-    }
-
-    @JsonProperty("TotalCount")
-    public void setTotalCount(Integer totalCount) {
-        this.totalCount = totalCount;
+    @JsonProperty("Coordinate")
+    public void setCoordinate(Coordinate coordinate) {
+        this.coordinate = coordinate;
     }
 
     @JsonAnyGetter

@@ -36,11 +36,6 @@ public class Name {
         this.languageCode = languageCode;
     }
 
-    public Name withLanguageCode(String languageCode) {
-        this.languageCode = languageCode;
-        return this;
-    }
-
     @JsonProperty("$")
     public String get$() {
         return $;
@@ -51,11 +46,6 @@ public class Name {
         this.$ = $;
     }
 
-    public Name with$(String $) {
-        this.$ = $;
-        return this;
-    }
-
     @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
         return this.additionalProperties;
@@ -64,11 +54,6 @@ public class Name {
     @JsonAnySetter
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
-    }
-
-    public Name withAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-        return this;
     }
 
 }
