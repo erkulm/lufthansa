@@ -10,9 +10,11 @@ import reactor.core.publisher.Mono;
 public interface AirportElasticRepository extends ReactiveCrudRepository<AirportESO, String> {
     Mono<AirportESO> findByAirportCode(String airportCode);
 
-    Flux<AirportESO> findAllByCityCodeContains(String cityCode);
+    Flux<AirportESO> findAllByCityCode(String cityCode);
 
-    Flux<AirportESO> findAllByCountryCodeContains(String countryCode);
+    Flux<AirportESO> findAllByAirportCode(String cityCode);
 
-    Flux<AirportESO> findAllByCityCodeContainsAndCountryCodeContains(String cityCode, String countryCode);
+    Flux<AirportESO> findAllByCountryCode(String countryCode);
+
+    Flux<AirportESO> findAllByCityCodeAndCountryCode(String cityCode, String countryCode);
 }

@@ -1,10 +1,10 @@
 package com.erkul.reactive.demo.service;
 
-import com.erkul.reactive.demo.entity.City;
 import com.erkul.reactive.demo.model.AirportDTO;
-import com.erkul.reactive.demo.service.model.CitySearch;
+import com.erkul.reactive.demo.service.model.AirportSearch;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 public interface AirportService {
@@ -12,7 +12,7 @@ public interface AirportService {
 
     void save(Flux<AirportDTO> airportDTOFlux);
 
-    Flux<AirportDTO> searchAirports(String search);
+    Mono<AirportDTO> searchAirportsByCode(String search);
 
-    Flux<AirportDTO> searchAirports(CitySearch search);
+    Flux<AirportDTO> searchAirports(AirportSearch search);
 }

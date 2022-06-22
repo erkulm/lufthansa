@@ -2,19 +2,18 @@ package com.erkul.reactive.demo.service.impl;
 
 import com.erkul.reactive.demo.elastic.AirportElasticRepository;
 import com.erkul.reactive.demo.elastic.model.AirportESO;
-import com.erkul.reactive.demo.elastic.model.CityESO;
 import com.erkul.reactive.demo.entity.Airport;
 import com.erkul.reactive.demo.model.AirportDTO;
-import com.erkul.reactive.demo.model.CityDTO;
 import com.erkul.reactive.demo.repository.AirportRepository;
 import com.erkul.reactive.demo.service.AirportService;
-import com.erkul.reactive.demo.service.model.CitySearch;
+import com.erkul.reactive.demo.service.model.AirportSearch;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor
@@ -39,20 +38,23 @@ public class AirportServiceImpl implements AirportService {
     }
 
     @Override
-    public Flux<AirportDTO> searchAirports(String search) {
-        final Flux<AirportESO> allByCityCodeContains = airportElasticRepository.findAllByCityCodeContains(search);
+    public Mono<AirportDTO> searchAirportsByCode(String search) {
+        final Mono<AirportESO> allByCityCodeContains = airportElasticRepository.findByAirportCode(search);
         return allByCityCodeContains.map(airportESO -> modelMapper.map(airportESO, AirportDTO.class));
     }
 
     @Override
-    public Flux<AirportDTO> searchAirports(CitySearch search) {
-        if (!StringUtils.hasText(search.cityCode()))
-            return airportElasticRepository.findAllByCountryCodeContains(search.countryCode())
+    public Flux<AirportDTO> searchAirports(AirportSearch search) {
+        if (!StringUtils.hasText(search.cityCode()) && !StringUtils.hasText(search.airportCode()))
+            return airportElasticRepository.findAllByCountryCode(search.countryCode())
                     .map(airport -> modelMapper.map(airport, AirportDTO.class));
-        if (!StringUtils.hasText(search.countryCode()))
-            return airportElasticRepository.findAllByCityCodeContains(search.cityCode())
+        if (!StringUtils.hasText(search.countryCode()) && !StringUtils.hasText(search.airportCode()))
+            return airportElasticRepository.findAllByCityCode(search.cityCode())
                     .map(airport -> modelMapper.map(airport, AirportDTO.class));
-        return airportElasticRepository.findAllByCityCodeContainsAndCountryCodeContains(search.cityCode(), search.countryCode())
+        if (!StringUtils.hasText(search.countryCode()) && !StringUtils.hasText(search.cityCode()))
+            return airportElasticRepository.findAllByAirportCode(search.airportCode())
+                    .map(airport -> modelMapper.map(airport, AirportDTO.class));
+        return airportElasticRepository.findAllByCityCodeAndCountryCode(search.cityCode(), search.countryCode())
                 .map(airport -> modelMapper.map(airport, AirportDTO.class));
     }
 
