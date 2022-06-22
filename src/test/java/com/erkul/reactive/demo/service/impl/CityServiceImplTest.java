@@ -5,6 +5,7 @@ import com.erkul.reactive.demo.elastic.model.CityESO;
 import com.erkul.reactive.demo.entity.City;
 import com.erkul.reactive.demo.model.CityDTO;
 import com.erkul.reactive.demo.repository.CityRepository;
+import com.erkul.reactive.demo.service.model.CitySearch;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -89,7 +90,7 @@ class CityServiceImplTest {
 
     @Test
     @MockitoSettings(strictness = Strictness.WARN)
-    void save() throws InterruptedException {
+    void save() {
 
         given(cityRepository.insert(any(Publisher.class))).willReturn(Flux.just(city1, city2));
 
@@ -105,9 +106,50 @@ class CityServiceImplTest {
 
     @Test
     void searchCities() {
+        given(cityElasticRepository.findAllByCityCodeContains(anyString())).willReturn(Flux.just(cityESO1));
+
+        final Flux<CityDTO> cities = cityService.searchCities("IST");
+
+        StepVerifier.create(cities).expectNext(cityDTO1).verifyComplete();
+
+        StepVerifier.create(cities).expectNextCount(1).verifyComplete();
+
+        then(cityElasticRepository).should(only()).findAllByCityCodeContains(anyString());
     }
 
     @Test
-    void testSearchCities() {
+    void testSearchCities_whenCityCodeIsPresent() {
+        given(cityElasticRepository.findAllByCityCodeContains(anyString())).willReturn(Flux.just(cityESO1));
+        final Flux<CityDTO> cities = cityService.searchCities(new CitySearch("IST", null));
+
+        StepVerifier.create(cities).expectNext(cityDTO1).verifyComplete();
+
+        StepVerifier.create(cities).expectNextCount(1).verifyComplete();
+
+        then(cityElasticRepository).should(only()).findAllByCityCodeContains(anyString());
+    }
+
+    @Test
+    void testSearchCities_whenCountryCodeIsPresent() {
+        given(cityElasticRepository.findAllByCountryCodeContains(anyString())).willReturn(Flux.just(cityESO1));
+        final Flux<CityDTO> cities = cityService.searchCities(new CitySearch(null, "TR"));
+
+        StepVerifier.create(cities).expectNext(cityDTO1).verifyComplete();
+
+        StepVerifier.create(cities).expectNextCount(1).verifyComplete();
+
+        then(cityElasticRepository).should(only()).findAllByCountryCodeContains(anyString());
+    }
+
+    @Test
+    void testSearchCities_whenCityAndCountryCodesArePresent() {
+        given(cityElasticRepository.findAllByCityCodeContainsAndCountryCodeContains(anyString(), anyString())).willReturn(Flux.just(cityESO1));
+        final Flux<CityDTO> cities = cityService.searchCities(new CitySearch("IST", "TR"));
+
+        StepVerifier.create(cities).expectNext(cityDTO1).verifyComplete();
+
+        StepVerifier.create(cities).expectNextCount(1).verifyComplete();
+
+        then(cityElasticRepository).should(only()).findAllByCityCodeContainsAndCountryCodeContains(anyString(), anyString());
     }
 }
