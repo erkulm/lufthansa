@@ -23,7 +23,7 @@ public class AirportExtService {
 
     public Mono<AirportsResponse> getAllAirports(final Integer limit, final Integer offset) {
         return webClient
-                .get().uri(uriBuilder -> uriBuilder.path(webClientConfig.getCitiesUrl())
+                .get().uri(uriBuilder -> uriBuilder.path(webClientConfig.getAirportsUrl())
                         .queryParamIfPresent("limit", Optional.ofNullable(limit))
                         .queryParamIfPresent("offset", Optional.ofNullable(offset))
                         .build())
@@ -32,7 +32,7 @@ public class AirportExtService {
 
 
     public Mono<String> getAllCitiesString() {
-        return webClient.get().uri(webClientConfig.getCitiesUrl())
+        return webClient.get().uri(webClientConfig.getAirportsUrl())
                 .retrieve()
                 .bodyToMono(String.class).single();
     }
