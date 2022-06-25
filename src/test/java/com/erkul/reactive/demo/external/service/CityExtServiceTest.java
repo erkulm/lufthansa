@@ -21,4 +21,13 @@ class CityExtServiceTest {
         System.out.println();
         assertThat(allCities).isNotNull();
     }
+
+    @Test
+    void testGetAllCities() {
+
+    }
+
+    @Test
+    void getAllCitiesString() {
+    }
 }

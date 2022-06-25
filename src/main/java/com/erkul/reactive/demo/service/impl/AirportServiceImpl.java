@@ -32,7 +32,7 @@ public class AirportServiceImpl implements AirportService {
     @Override
     public void save(Flux<AirportDTO> airportDTOFlux) {
         airportRepository.insert(airportDTOFlux.map(airportDTO -> modelMapper.map(airportDTO, Airport.class)))
-                .doOnNext(airport -> airportElasticRepository.save(modelMapper.map(airport, AirportESO.class)).subscribe())
+                .flatMap(airport -> airportElasticRepository.save(modelMapper.map(airport, AirportESO.class)))
                 .doOnError(throwable -> log.error(throwable.getMessage()))
                 .subscribe();
     }
