@@ -1,24 +1,23 @@
 
 package com.erkul.reactive.demo.external.model;
 
+import com.fasterxml.jackson.annotation.*;
+
+import javax.annotation.Generated;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import javax.annotation.Generated;
-
-import com.fasterxml.jackson.annotation.*;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "CityCode",
-    "CountryCode",
-    "Names",
-    "UtcOffset",
-    "TimeZoneId",
-    "Airports"
+        "CityCode",
+        "CountryCode",
+        "Names",
+        "UtcOffset",
+        "TimeZoneId",
+        "Airports"
 })
 @Generated("jsonschema2pojo")
-@JsonIgnoreProperties({"Names"})
 public class City {
 
     @JsonProperty("CityCode")

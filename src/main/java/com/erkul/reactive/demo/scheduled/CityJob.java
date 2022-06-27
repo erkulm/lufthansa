@@ -5,7 +5,6 @@ import com.erkul.reactive.demo.elastic.model.CityESO;
 import com.erkul.reactive.demo.external.model.CitiesResponse;
 import com.erkul.reactive.demo.external.service.CityExtService;
 import com.erkul.reactive.demo.repository.CityRepository;
-import com.erkul.reactive.demo.service.CityService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -21,7 +20,6 @@ import reactor.core.publisher.Mono;
 public class CityJob {
 
     private final CityExtService cityExtService;
-    private final CityService cityService;
     private final CityRepository cityRepository;
     private final CityElasticRepository cityElasticRepository;
     private final ModelMapper modelMapper;
