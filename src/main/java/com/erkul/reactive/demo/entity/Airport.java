@@ -18,7 +18,7 @@ public class Airport {
     String airportCode;
     String cityCode;
     String countryCode;
-    Set<Names> airportNames;
+    Set<NameAndLang> airportNames;
     String utcOffset;
     String timeZoneId;
 }

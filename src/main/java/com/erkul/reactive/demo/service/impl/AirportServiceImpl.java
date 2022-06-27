@@ -28,6 +28,13 @@ public class AirportServiceImpl implements AirportService {
         return airportElasticRepository.findAll().map(airport -> modelMapper.map(airport, AirportDTO.class));
     }
 
+    @Override
+    public Flux<AirportDTO> getAirportsByCityOrAirportNameOrCodeContaining(String text, String languageCode) {
+        return airportElasticRepository
+                .findAllByAirportNamesLike(text)
+                .map(airport -> modelMapper.map(airport, AirportDTO.class));
+    }
+
 
     @Override
     public void save(Flux<AirportDTO> airportDTOFlux) {

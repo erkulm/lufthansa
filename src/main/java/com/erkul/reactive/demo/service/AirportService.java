@@ -10,6 +10,8 @@ import reactor.core.publisher.Mono;
 public interface AirportService {
     Flux<AirportDTO> getAirports();
 
+    Flux<AirportDTO> getAirportsByCityOrAirportNameOrCodeContaining(String text, String languageCode);
+
     void save(Flux<AirportDTO> airportDTOFlux);
 
     Mono<AirportDTO> searchAirportsByCode(String search);

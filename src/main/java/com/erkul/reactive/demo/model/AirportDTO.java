@@ -1,6 +1,6 @@
 package com.erkul.reactive.demo.model;
 
-import com.erkul.reactive.demo.entity.Names;
+import com.erkul.reactive.demo.entity.NameAndLang;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +17,7 @@ public class AirportDTO {
     String airportCode;
     String cityCode;
     String countryCode;
-    Set<Names> cityNames;
+    Set<NameAndLang> airportNames;
     String utcOffset;
     String timeZoneId;
 }

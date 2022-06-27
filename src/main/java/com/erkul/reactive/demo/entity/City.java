@@ -17,7 +17,7 @@ public class City {
     String id;
     String cityCode;
     String countryCode;
-    Set<Names> cityNames;
+    Set<NameAndLang> cityNames;
     String utcOffset;
     String timeZoneId;
 }

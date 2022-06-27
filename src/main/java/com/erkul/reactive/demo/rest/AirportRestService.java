@@ -30,4 +30,9 @@ public class AirportRestService {
         return ResponseEntity.ok(airportService.searchAirports(search));
     }
 
+    @GetMapping("/search-by-name-or-code")
+    public ResponseEntity<Flux<AirportDTO>> searchAirports(@RequestParam String text) {
+        return ResponseEntity.ok(airportService.getAirportsByCityOrAirportNameOrCodeContaining(text, "EN"));
+    }
+
 }

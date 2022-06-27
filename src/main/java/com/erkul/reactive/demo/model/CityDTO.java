@@ -1,6 +1,6 @@
 package com.erkul.reactive.demo.model;
 
-import com.erkul.reactive.demo.entity.Names;
+import com.erkul.reactive.demo.entity.NameAndLang;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +16,7 @@ public class CityDTO {
     String id;
     String cityCode;
     String countryCode;
-    Set<Names> cityNames;
+    Set<NameAndLang> cityNames;
     String utcOffset;
     String timeZoneId;
 }
