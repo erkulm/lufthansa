@@ -2,6 +2,7 @@ package com.erkul.reactive.demo.scheduled;
 
 import com.erkul.reactive.demo.elastic.CityElasticRepository;
 import com.erkul.reactive.demo.elastic.model.CityESO;
+import com.erkul.reactive.demo.entity.NameAndLang;
 import com.erkul.reactive.demo.external.model.CitiesResponse;
 import com.erkul.reactive.demo.external.service.CityExtService;
 import com.erkul.reactive.demo.repository.CityRepository;
@@ -12,6 +13,9 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @EnableAsync
 @RequiredArgsConstructor
@@ -26,7 +30,7 @@ public class CityJob {
 
     private int offset = 0;
 
-    //@Scheduled(fixedRate = 6000000)
+    // @Scheduled(fixedRate = 6000000)
     private void getCitiesAndSave() {
         final Mono<CitiesResponse> allCities = cityExtService.getAllCities(100, offset);
 
@@ -37,6 +41,8 @@ public class CityJob {
                                         .cityCode(city.getCityCode())
                                         .countryCode(city.getCountryCode())
                                         .utcOffset(city.getUtcOffset())
+                                        .cityNames(getNamesFromExt(city.getNames()))
+                                        .timeZoneId(city.getTimeZoneId())
                                         .build()
                         );
 
@@ -55,5 +61,15 @@ public class CityJob {
                         getCitiesAndSave();
                     }
                 });
+    }
+
+    private Set<NameAndLang> getNamesFromExt(com.erkul.reactive.demo.external.model.Names extNames) {
+        Set<NameAndLang> names = new HashSet<>();
+        extNames.getName().forEach(extName ->
+                names.add(NameAndLang.builder()
+                        .name(extName.get$())
+                        .languageCode(extName.getLanguageCode())
+                        .build()));
+        return names;
     }
 }

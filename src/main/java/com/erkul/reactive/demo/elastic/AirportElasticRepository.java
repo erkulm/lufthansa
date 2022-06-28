@@ -21,9 +21,9 @@ public interface AirportElasticRepository extends ReactiveCrudRepository<Airport
 
     Flux<AirportESO> findAllByCityCodeAndCountryCode(String cityCode, String countryCode);
 
-    Flux<AirportESO> findAllByAirportNamesLikeOrAirportCodeStartingWith(String airportNames, String airportCode);
+    Flux<AirportESO> findAllByAirportNames_NameLikeAndAirportNames_LanguageCodeEquals(String airportNames, String airportCode);
 
-    Flux<AirportESO> findAllByAirportNamesLike(String airportNames);
+    Flux<AirportESO> findAllByAirportNames_NameLike(String airportNames);
 
     Flux<AirportESO> findAllByAirportNamesContainsOrAirportCodeStartingWith(List<NameAndLang> airportNames, String airportCode);
 }

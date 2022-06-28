@@ -1,6 +1,7 @@
 package com.erkul.reactive.demo.service.impl;
 
 import com.erkul.reactive.demo.elastic.AirportElasticRepository;
+import com.erkul.reactive.demo.elastic.CityElasticRepository;
 import com.erkul.reactive.demo.elastic.model.AirportESO;
 import com.erkul.reactive.demo.entity.Airport;
 import com.erkul.reactive.demo.model.AirportDTO;
@@ -20,6 +21,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class AirportServiceImpl implements AirportService {
     private final AirportRepository airportRepository;
+    private final CityElasticRepository cityElasticRepository;
     private final ModelMapper modelMapper;
     private final AirportElasticRepository airportElasticRepository;
 
@@ -30,9 +32,24 @@ public class AirportServiceImpl implements AirportService {
 
     @Override
     public Flux<AirportDTO> getAirportsByCityOrAirportNameOrCodeContaining(String text, String languageCode) {
-        return airportElasticRepository
-                .findAllByAirportNamesLike(text)
-                .map(airport -> modelMapper.map(airport, AirportDTO.class));
+        final Flux<AirportDTO> airportsByCityNames =
+                cityElasticRepository.findAllByCityNames_NameLikeAndCityNames_LanguageCodeEquals(text, languageCode)
+                        .flatMap(cityESO -> airportElasticRepository.findAllByCityCode(cityESO.getCityCode()))
+                        .map(airportESO -> modelMapper.map(airportESO, AirportDTO.class))
+                        .map(airportDTO -> {
+                            airportDTO.getAirportNames().removeIf(nameAndLang -> !languageCode.equals(nameAndLang.getLanguageCode()));
+                            return airportDTO;
+                        });
+
+        final Flux<AirportDTO> airports = airportElasticRepository
+                .findAllByAirportNames_NameLikeAndAirportNames_LanguageCodeEquals(text, languageCode)
+                .map(airport -> modelMapper.map(airport, AirportDTO.class))
+                .map(airportDTO -> {
+                    airportDTO.getAirportNames().removeIf(nameAndLang -> !languageCode.equals(nameAndLang.getLanguageCode()));
+                    return airportDTO;
+                });
+
+        return Flux.merge(airportsByCityNames, airports).distinct();
     }
 
 
