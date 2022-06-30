@@ -14,4 +14,5 @@ public class WebClientConfig {
     private String citiesUrl;
     private String airportsUrl;
     private String bearerToken;
+    private String flightsUrl;
 }
